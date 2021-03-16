@@ -21,45 +21,45 @@ import java.util.logging.Logger;
  * @author MyPC
  */
 public class Product {
-    private int idstudent;
-    private String fullname;
-    private String sdt;
-    private String email;
+    private int idproduct;
+    private String pname;
+    private String pcategory;
+    private int pprice;
     
     //Xây dựng các hàm khởi tạo
 
     public Product() {
     }
 
-    public Product(String fullname, String sdt, String email) {
-        this.fullname = fullname;
-        this.sdt = sdt;
-        this.email = email;
+    public Product(String pname, String pcategory, int pprice) {
+        this.pname = pname;
+        this.pcategory = pcategory;
+        this.pprice = pprice;
     }
 
-    public Product(int idstudent, String fullname, String sdt, String email) {
-        this.idstudent = idstudent;
-        this.fullname = fullname;
-        this.sdt = sdt;
-        this.email = email;
+    public Product(int idproduct, String pname, String pcategory, int pprice) {
+        this.idproduct = idproduct;
+        this.pname = pname;
+        this.pcategory = pcategory;
+        this.pprice = pprice;
     }
     
        
     //Xây dựng hàm thêm 1 student vào database
-    public void save_student_to_db(){
+    public void save_product_to_db(){
         try {
             //Code của bạn ở đây
-            dbutils db = new dbutils("qlht", "3306", "root", "123456");
+            dbutils db = new dbutils("product", "3306", "root", "123456");
             Connection ketnoicsdl = db.lay_ket_noi_csdl();            
             // the mysql insert statement
-            String query = " insert into student (fullname, sdt, email)"
+            String query = " insert into product (pname, pcategory, pprice)"
                     + " values (?, ?, ?)";
             
             // create the mysql insert preparedstatement
             PreparedStatement preparedStmt = ketnoicsdl.prepareStatement(query);
-            preparedStmt.setString(1, this.fullname);
-            preparedStmt.setString(2, this.sdt);
-            preparedStmt.setString(3, this.email);
+            preparedStmt.setString(1, this.pname);
+            preparedStmt.setString(2, this.pcategory);
+            preparedStmt.setInt(3, this.pprice);
             
             // execute the preparedstatement
             preparedStmt.execute();
@@ -72,22 +72,22 @@ public class Product {
     }
     
     //Hàm lấy ra danh sách các sinh viên trong bang student
-    public ArrayList<Product> lay_danh_sach_sinh_vien(){
+    public ArrayList<Product> lay_danh_sach_san_pham(){
         ArrayList<Product> result = new ArrayList<>();
         try {
             //code của bạn ở đây
-            dbutils db = new dbutils("qlht", "3306", "root", "123456");
+            dbutils db = new dbutils("product", "3306", "root", "123456");
             Connection conn = db.lay_ket_noi_csdl(); 
             //String query = "select * from student";
             Statement stmt=conn.createStatement();
             //PreparedStatement stmt = ketnoicsdl.prepareStatement(query);
-            ResultSet rs=stmt.executeQuery("select * from student");
+            ResultSet rs=stmt.executeQuery("select * from product");
             while(rs.next()){
-                Product sv = new Product(rs.getInt("idstudent"), 
-                                        rs.getString("fullname"), 
-                                        rs.getString("sdt"), 
-                                        rs.getString("email"));
-                result.add(sv);
+                Product sp = new Product(rs.getInt("idproduct"), 
+                                        rs.getString("pname"), 
+                                        rs.getString("pcategory"), 
+                                        rs.getInt("pprice"));
+                result.add(sp);
             }
             conn.close();
         } catch (SQLException ex) {
@@ -98,20 +98,20 @@ public class Product {
     
     
     //Hàm cập nhật sinh viên hiện tại vào csdl
-    public void update_current_student(){
+    public void update_current_product(){
         try {
             //code của bạn ở đây
-            dbutils db = new dbutils("qlht", "3306", "root", "123456");
+            dbutils db = new dbutils("product", "3306", "root", "123456");
             Connection ketnoicsdl = db.lay_ket_noi_csdl(); 
             // create the java mysql update preparedstatement
-            String query = "update student set fullname = ?,"
+            String query = "update product set pname = ?,"
                     + " sdt = ?,"
-                    + "email = ? where idstudent = ?";
+                    + "email = ? where idsproduct = ?";
             PreparedStatement preparedStmt = ketnoicsdl.prepareStatement(query);
-            preparedStmt.setString(1, this.fullname);
-            preparedStmt.setString(2, this.sdt);
-            preparedStmt.setString(3, this.email);
-            preparedStmt.setInt(4, this.idstudent);
+            preparedStmt.setString(1, this.pname);
+            preparedStmt.setString(2, this.pcategory);
+            preparedStmt.setInt(3, this.pprice);
+            preparedStmt.setInt(4, this.idproduct);
             
             // execute the java preparedstatement
             preparedStmt.executeUpdate();
@@ -123,17 +123,17 @@ public class Product {
     }
     
     //Hàm xóa sinh viên hiện tại ra khỏi csdl
-    public void delete_current_student(){
+    public void delete_current_product(){
         //code của bạn ở đây
         try {
             //code của bạn ở đây
             //Buoc 1: Tao ket noi toi csdl
-            dbutils db = new dbutils("qlht", "3306", "root", "123456");
+            dbutils db = new dbutils("product", "3306", "root", "123456");
             Connection ketnoicsdl = db.lay_ket_noi_csdl(); 
             // create the java mysql update preparedstatement
-            String query = "delete from student where idstudent = ?";
+            String query = "delete from product where idproduct = ?";
             PreparedStatement preparedStmt = ketnoicsdl.prepareStatement(query);
-            preparedStmt.setInt(1, this.idstudent);
+            preparedStmt.setInt(1, this.idproduct);
             
             // execute the java preparedstatement
             preparedStmt.executeUpdate();
@@ -146,42 +146,45 @@ public class Product {
     
     //Các getter và setter 
 
-    public int getIdstudent() {
-        return idstudent;
+    public int getIdproduct() {
+        return idproduct;
     }
 
-    public void setIdstudent(int idstudent) {
-        this.idstudent = idstudent;
+    public void setIdproduct(int idproduct) {
+        this.idproduct = idproduct;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getPname() {
+        return pname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setPname(String pname) {
+        this.pname = pname;
     }
 
-    public String getSdt() {
-        return sdt;
+    public String getPcategory() {
+        return pcategory;
     }
 
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
+    public void setPcategory(String pcategory) {
+        this.pcategory = pcategory;
     }
 
-    public String getEmail() {
-        return email;
+    public int getPprice() {
+        return pprice;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPprice(int pprice) {
+        this.pprice = pprice;
     }
 
     @Override
     public String toString() {
-        return "Student{" + "idstudent=" + idstudent + ", fullname=" + fullname + ", sdt=" + sdt + ", email=" + email + '}';
+        return "Product{" + "idproduct=" + idproduct + ", pname=" + pname + ", pcategory=" + pcategory + ", pprice=" + pprice + '}';
     }
-    
+
+ 
+
+  
     
 }
