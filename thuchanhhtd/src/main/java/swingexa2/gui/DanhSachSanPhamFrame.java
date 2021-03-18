@@ -7,7 +7,11 @@ package swingexa2.gui;
 
 import swingexa.gui.*;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
 import product.Product;
 
@@ -32,12 +36,12 @@ public class DanhSachSanPhamFrame extends javax.swing.JInternalFrame {
         Product temp = new Product();
         ArrayList<Product> products = temp.lay_danh_sach_san_pham();
         DefaultTableModel table = (DefaultTableModel) this.jTable1.getModel();
-        for(Product sv: products){
-            table.addRow(new Object[]{sv.getIdproduct(),
-                                sv.getPname(),
-                                sv.getPcategory(),
-                                sv.getPprice()});
-//            System.out.println(sv.toString());
+        for(Product sp: products){
+            table.addRow(new Object[]{sp.getIdproduct(),
+                                sp.getPname(),
+                                sp.getPcategory(),
+                                sp.getPprice()});
+//            System.out.println(sp.toString());
         }
         this.validate();
     }
@@ -82,25 +86,50 @@ public class DanhSachSanPhamFrame extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        try{
+            int row = jTable1.rowAtPoint(evt.getPoint());
+            String s = jTable1.getModel().getValueAt(row, 0).toString();
+            int id = Integer.parseInt(s);
+            JDesktopPane dk = getDesktopPane();
+            
+            SuaDuLieuSanPhamFrame suaframe = new SuaDuLieuSanPhamFrame();
+            suaframe.setIdproduct(id);
+            suaframe.load_product_data();
+            dk.add(suaframe);
+            suaframe.setVisible(true);
+        
+        }catch (SQLException ex) {
+            Logger.getLogger(DanhSachSanPhamFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

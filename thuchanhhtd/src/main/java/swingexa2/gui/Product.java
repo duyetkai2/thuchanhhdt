@@ -70,6 +70,23 @@ public class Product {
         }
         
     }
+     //Hàm lấy ra 1 sinh vien theo id
+    public Product get_product_by_id(int id) throws SQLException{
+        dbutils db = new dbutils("product", "3306", "root", "123456");
+        Connection conn = db.lay_ket_noi_csdl();
+        String query = "select pname, pcategory, pprice from product where idproduct = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        Product sp= new Product();
+        if (rs.next()){
+            sp.setPname(rs.getString("pname"));
+            sp.setPcategory(rs.getString("pcategory"));
+            sp.setPprice(rs.getInt("pprice"));
+        }
+        conn.close();
+        return sp;
+    }
     
     //Hàm lấy ra danh sách các sinh viên trong bang student
     public ArrayList<Product> lay_danh_sach_san_pham(){
@@ -105,8 +122,8 @@ public class Product {
             Connection ketnoicsdl = db.lay_ket_noi_csdl(); 
             // create the java mysql update preparedstatement
             String query = "update product set pname = ?,"
-                    + " sdt = ?,"
-                    + "email = ? where idsproduct = ?";
+                    + " pcategory = ?,"
+                    + "pprice = ? where idproduct = ?";
             PreparedStatement preparedStmt = ketnoicsdl.prepareStatement(query);
             preparedStmt.setString(1, this.pname);
             preparedStmt.setString(2, this.pcategory);

@@ -55,6 +55,11 @@ public class NhapSanPhamFrame extends javax.swing.JInternalFrame {
         jLabel3.setText("Pprice");
 
         jbtnCancel.setText("Cancel");
+        jbtnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelActionPerformed(evt);
+            }
+        });
 
         jbtnOk.setText("OK");
         jbtnOk.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +136,10 @@ public class NhapSanPhamFrame extends javax.swing.JInternalFrame {
     private void jtxtPnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtPnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtPnameActionPerformed
+
+    private void jbtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelActionPerformed
+      System.exit(0);
+    }//GEN-LAST:event_jbtnCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
