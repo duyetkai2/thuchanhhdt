@@ -6,7 +6,13 @@
 package swingexa.gui;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -80,6 +86,11 @@ public class DanhSachSinhVienFrame extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,6 +111,23 @@ public class DanhSachSinhVienFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row = jTable1.rowAtPoint(evt.getPoint());
+        //        String s = jTable1.getModel().getValueAt(row, 0).toString();
+        //        JOptionPane.showMessageDialog(null, s);
+        String s = jTable1.getModel().getValueAt(row, 0).toString();
+        int id = Integer.parseInt(s);
+        JDesktopPane dk = getDesktopPane();
+        SuaDuLieuSinhVienFrame suaframe = new SuaDuLieuSinhVienFrame();
+        suaframe.setIdstudent(id);
+        //suaframe.load_student_data();
+        suaframe.load_student_image_data();
+        dk.add(suaframe);
+        suaframe.setVisible(true);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

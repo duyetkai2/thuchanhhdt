@@ -5,7 +5,12 @@
  */
 package swingexa.gui;
 
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -37,6 +42,9 @@ public class NhapSinhVienFrame extends javax.swing.JInternalFrame {
         jtxtEmail = new javax.swing.JTextField();
         jbtnCancel = new javax.swing.JButton();
         jbtnOk = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jtxtImage = new javax.swing.JTextField();
+        jbtnBrowse = new javax.swing.JButton();
 
         setTitle("Nhập dữ liệu sinh viên");
 
@@ -47,11 +55,25 @@ public class NhapSinhVienFrame extends javax.swing.JInternalFrame {
         jLabel3.setText("Email address:");
 
         jbtnCancel.setText("Cancel");
+        jbtnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelActionPerformed(evt);
+            }
+        });
 
         jbtnOk.setText("OK");
         jbtnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnOkActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Image");
+
+        jbtnBrowse.setText("Browse");
+        jbtnBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnBrowseActionPerformed(evt);
             }
         });
 
@@ -61,25 +83,34 @@ public class NhapSinhVienFrame extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtxtFullname))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtEmail)
+                                    .addComponent(jtxtSdt)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jtxtImage, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbtnBrowse)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jbtnOk)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtnCancel))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(jtxtFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jtxtEmail)
-                                .addComponent(jtxtSdt)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(jbtnCancel)
+                        .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,9 +129,14 @@ public class NhapSinhVienFrame extends javax.swing.JInternalFrame {
                     .addComponent(jtxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnCancel)
-                    .addComponent(jbtnOk))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jtxtImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnBrowse))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnOk)
+                    .addComponent(jbtnCancel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -108,27 +144,60 @@ public class NhapSinhVienFrame extends javax.swing.JInternalFrame {
 
     private void jbtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOkActionPerformed
         // TODO add your handling code here:
+//        Student sv = new Student(jtxtFullname.getText(), 
+//                                    jtxtSdt.getText(), 
+//                                    jtxtEmail.getText());
+//        sv.save_student_to_db();
         Student sv = new Student(jtxtFullname.getText(), 
-                                    jtxtSdt.getText(), 
-                                    jtxtEmail.getText());
-        sv.save_student_to_db();
+                                   jtxtSdt.getText(), 
+                                    jtxtEmail.getText(),
+                                       jtxtImage.getText());
+        sv.save_student_with_image();
         JOptionPane.showMessageDialog(this, "Đã lưu vào CSDL", "Thông báo kết quả", 
                         JOptionPane.INFORMATION_MESSAGE);
         jtxtFullname.setText("");
         jtxtSdt.setText("");
         jtxtEmail.setText("");
+        jtxtImage.setText("");
         jtxtFullname.setFocusable(true);
     }//GEN-LAST:event_jbtnOkActionPerformed
+
+    private void jbtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelActionPerformed
+        try {
+            // TODO add your handling code here:
+            this.setClosed(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(NhapSinhVienFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbtnCancelActionPerformed
+
+    private void jbtnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBrowseActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        //Loc ra cac tap tin hinh anh
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image types", 
+                                            "jpg", "jpeg", "gif", "bmp", "png");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showDialog(null, "Choose");
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            String path = chooser.getSelectedFile().getPath();
+//            path = path.replaceAll("\\", "\\\\");
+            jtxtImage.setText(path);
+        }
+    }//GEN-LAST:event_jbtnBrowseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton jbtnBrowse;
     private javax.swing.JButton jbtnCancel;
     private javax.swing.JButton jbtnOk;
     private javax.swing.JTextField jtxtEmail;
     private javax.swing.JTextField jtxtFullname;
+    private javax.swing.JTextField jtxtImage;
     private javax.swing.JTextField jtxtSdt;
     // End of variables declaration//GEN-END:variables
 }

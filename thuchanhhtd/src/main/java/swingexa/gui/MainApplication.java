@@ -16,6 +16,8 @@ public class MainApplication extends javax.swing.JFrame {
     public DanhSachSinhVienFrame dssv;
     public NhapSinhVienFrame nhapsv;
     public Connection ketnoi;
+    public TimKiemFrame timsv;
+    public TimKiemFullFrame timfull;
     /**
      * Creates new form MainApplication
      */
@@ -69,12 +71,21 @@ public class MainApplication extends javax.swing.JFrame {
         fileMenu.add(openMenuItem);
 
         saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
+        saveMenuItem.setText("Tìm kiếm theo tên");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(saveMenuItem);
 
         saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
+        saveAsMenuItem.setText("Tìm kiếm đầy đủ");
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(saveAsMenuItem);
 
         exitMenuItem.setMnemonic('x');
@@ -149,6 +160,22 @@ public class MainApplication extends javax.swing.JFrame {
         this.desktopPane.add(nhapsv);
         this.nhapsv.setVisible(true);
     }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        // TODO add your handling code here:
+        this.dssv.dispose();
+        this.timsv = new TimKiemFrame();
+        this.desktopPane.add(timsv);
+        this.timsv.setVisible(true);
+    }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        // TODO add your handling code here:
+        this.dssv.dispose();
+        this.timfull = new TimKiemFullFrame();
+        this.desktopPane.add(timfull);
+        this.timfull.setVisible(true);
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
