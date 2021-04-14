@@ -216,19 +216,19 @@ public class Student {
         }
         return result;
     }
-    public ArrayList<Student> tim_kiem_sinh_vien_theo_fullall(int  s , String b, String t,String c ){
+    public ArrayList<Student> tim_kiem_sinh_vien_theo_fullall(String b,String t,String c  ){
         ArrayList<Student> result = new ArrayList<>();
         try {
             //code của bạn ở đây
             dbutils db = new dbutils("qlht", "3306", "root", "123456");
             Connection conn = db.lay_ket_noi_csdl(); 
-            String query = "select idstudent, fullname, sdt, email from student where idstudent like ? or fullname like ? or sdt like ? or email like ? ";
+            String query = "select * from student where  fullname like ?  and sdt like ? and email like ?  ";
             PreparedStatement stmt = conn.prepareStatement(query);
          
-            stmt.setInt(1, '%' + s + '%');
-            stmt.setString(2, '%' + b + '%');
-            stmt.setString(3, '%' + t + '%');
-            stmt.setString(4, '%' + c + '%');
+            
+            stmt.setString(1, '%' + b + '%');
+           stmt.setString(2, '%' + t + '%');
+           stmt.setString(3, '%' + c + '%');
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 Student sv = new Student(rs.getInt("idstudent"), 

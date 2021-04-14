@@ -133,17 +133,17 @@ public class TimKiemFullFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int s = Integer.parseInt(jtxtID.getText());
+       
         String b = jtxtHoten.getText();
         String t = jtxtSdt.getText();
         String c = jtxtEmail.getText();
         
         Student sv = new Student();
-        ArrayList<Student> kq = sv.tim_kiem_sinh_vien_theo_fullall(s,b,t,c);
+        ArrayList<Student> kq = sv.tim_kiem_sinh_vien_theo_fullall(b,t,c);
         table = (DefaultTableModel) this.jtblBang.getModel();
         table.setRowCount(0);
         kq.forEach((Student sv1) -> {
-            table.addRow(new Object[]{sv1.getIdstudent(), sv1.getFullname(), sv1.getSdt(), sv1.getEmail()});
+            table.addRow(new Object[]{sv1.getIdstudent(), sv1.getFullname(), sv1.getSdt(), sv1.getEmail(), sv1.getImageOut()});
 //            System.out.println(sv.toString());
         });
         this.validate();        // TODO add your handling code here:
